@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------
 # RRFMCLI
 #    © 2026 Remus Rigo
-#       v1.0 20260727
+#       v1.0.20260728
 #--------------------------------------------------------------------------------------------------
 
 import sys
@@ -49,7 +49,7 @@ def update_files(srcFile, srcPath):
 
             # skip if the found file IS the source file
             if targetFullPath == srcFullPath:
-               print(f"Skipped (source itself): {targetFullPath}")
+               print(f"Skip source: {targetFullPath}")
                continue
 
             shutil.copy2(srcFile, targetFullPath)
@@ -62,13 +62,13 @@ def update_files(srcFile, srcPath):
 #--------------------------------------------------------------------------------------------------
 # print information about the command line arguments
 def print_info():
-   print("RRFMCLI v1.0 20260727")
+   print("RRFMCLI v1.0.20260728")
    print("   © 2026 Remus Rigo")
    print()
-   print("RRFMCLI /UF /source:<source_file> /search:<search_path>")
+   print("RRFMCLI /UF /source:<sourcefile> /search:<searchpath>")
    print("/UF - Update files")
-   print("/source:<source_file> - Specify the path to the source file")
-   print("/search:<search_path> - Specify the search path")
+   print("/source:<sourcefile> - Specify the source file (path included)")
+   print("/search:<searchpath> - Specify the search path")
 
 #--------------------------------------------------------------------------------------------------
 # main function
