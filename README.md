@@ -1,33 +1,37 @@
-# Remus Rigo File Manager CLI
-
-A Windows file utility command line interface
-
+# RRFMCLI
+RRFMCLI: Remus Rigo File Manager CLI, a Windows file utility for the command line (Python version)
 
 
-## Authors
+
+## Author
 
 * [@remusrigo](https://github.com/RemusRigo)
 * [@remusrigo](https://sourceforge.net/u/remusrigo/profile)
 
 
 
-## Usage
+## Features
 
-* RRFMCLI /UF /source:sorcefile /search:path
+* `/UF` Update file: copy a source file over every file with the same name (not case sensitive) in a folder and its subfolders
+* Lists every updated file, and the total
+* Keeps the source file's dates (`shutil.copy2`)
+* Run as a Python script, or as a single `.exe` built with PyInstaller
 
-  * /UF Update file (take source file and overwrite all files with the same name in the given path):
 
-    * /source:sorcefile
-    * /search:path
+
+## User's Guide
+
+See the [User's Guide](UsersGuide.md) for requirements and usage.
 
 
 
 ## Statistics
 
-![status](https://img.shields.io/badge/status-in%20progress-orange)
+![Python](https://img.shields.io/badge/Language-Python-blue)
+![VS](https://img.shields.io/badge/IDE-Visual%20Studio-purple)
 <br>
+![status](https://img.shields.io/badge/status-in%20progress-orange) 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/RemusRigo/RRFMCLI-Python/total)
-
 
 
 
