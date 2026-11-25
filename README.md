@@ -1,5 +1,5 @@
 # RRFMCLI
-RRFMCLI: Remus Rigo File Manager CLI, a Windows file utility for the command line (Python version)
+RRFMCLI: Remus Rigo File Manager CLI, a Windows file utility for the command line
 
 
 
@@ -21,7 +21,7 @@ RRFMCLI: Remus Rigo File Manager CLI, a Windows file utility for the command lin
 
 ## User's Guide
 
-See the [User's Guide](UsersGuide.md) for requirements and usage.
+See the [User's Guide](Users%20Guide.md) for requirements and usage.
 
 
 

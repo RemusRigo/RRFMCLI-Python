@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------
 # RRFMCLI - Remus Rigo File Manager Command Line Interface
 #    © 2026 Remus Rigo
-#       v1.0.20260728
+#       v1.0.20261125
 #--------------------------------------------------------------------------------------------------
 
 import sys
@@ -9,55 +9,68 @@ import os
 import shutil
 
 #--------------------------------------------------------------------------------------------------
-# parse command line arguments
+# parse command line arguments (switches can be given in any order)
 def parse_args():
    uf_flag = False
-   srcFile=None
-   srcPath=None
+   srcFile = None
+   srcPath = None
 
-   # /UF update file
-   if len(sys.argv) > 1 and sys.argv[1].upper() == '/UF':
-      uf_flag = True
+   for param in sys.argv[1:]:
+      lower = param.lower()
+
+      # /UF update file
+      if lower == '/uf':
+         uf_flag = True
 
       # /source:<path/sourcefile>
-      if len(sys.argv) > 2:
-         param2 = sys.argv[2]
-         if param2.lower().startswith('/source:'):
-            srcFile = param2.split(':', 1)[1]
-            srcFile = srcFile.strip('"')
+      elif lower.startswith('/source:'):
+         srcFile = param.split(':', 1)[1].strip('"')
 
       # /search:<path>
-      if len(sys.argv) > 3:
-         param3 = sys.argv[3]
-         if param3.lower().startswith('/search:'):
-            srcPath = param3.split(':', 1)[1]
-            srcPath = srcPath.strip('"')
+      elif lower.startswith('/search:'):
+         srcPath = param.split(':', 1)[1].strip('"')
 
    return uf_flag, srcFile, srcPath
 
 #--------------------------------------------------------------------------------------------------
-# Update files
+# report folders that cannot be read while searching
+def walk_error(err):
+   print(f"Warning: cannot read folder: {err.filename} ({err.strerror})")
+
+#--------------------------------------------------------------------------------------------------
+# Update files, returns the number of files that failed
 def update_files(srcFile, srcPath):
    fileName = os.path.basename(srcFile)
-   srcFullPath = os.path.abspath(srcFile)
    updated = 0
+   failed = 0
 
-   for root, dirs, files in os.walk(srcPath):
+   for root, dirs, files in os.walk(srcPath, onerror=walk_error):
       for fname in files:
          if fname.lower() == fileName.lower():
             targetFullPath = os.path.abspath(os.path.join(root, fname))
 
-            # skip if the found file IS the source file
-            if targetFullPath == srcFullPath:
-               print(f"Skip source: {targetFullPath}")
-               continue
+            # skip if the found file IS the source file (any letter case, or a link to it)
+            try:
+               if os.path.samefile(srcFile, targetFullPath):
+                  print(f"Skip source: {targetFullPath}")
+                  continue
+            except OSError:
+               pass
 
-            shutil.copy2(srcFile, targetFullPath)
-            print(f"Updated: {targetFullPath}")
-            updated += 1
+            try:
+               shutil.copy2(srcFile, targetFullPath)
+               print(f"Updated: {targetFullPath}")
+               updated += 1
+            except OSError as err:
+               print(f"Failed: {targetFullPath} ({err.strerror or err})")
+               failed += 1
 
    print()
    print(f"Total files updated: {updated}")
+   if failed:
+      print(f"Total files failed: {failed}")
+
+   return failed
 
 #--------------------------------------------------------------------------------------------------
 # print information about the command line arguments
@@ -79,18 +92,21 @@ if __name__ == '__main__':
 
    uf_flag, srcFile, srcPath = parse_args()
 
-   if uf_flag:
-      if srcFile is None or not os.path.isfile(srcFile):
-         print(f"Error: source file not found: {srcFile}")
-         print()
-         print_info()
-         sys.exit(1)
+   if not uf_flag:
+      print_info()
+      sys.exit(1)
 
-      if srcPath is None or not os.path.isdir(srcPath):
-         print(f"Error: search path not found: {srcPath}")
-         print()
-         print_info()
-         sys.exit(1)
+   if not srcFile or not os.path.isfile(srcFile):
+      print(f"Error: source file not found: {srcFile}")
+      print()
+      print_info()
+      sys.exit(1)
 
-   update_files(srcFile, srcPath)
-   
+   if not srcPath or not os.path.isdir(srcPath):
+      print(f"Error: search path not found: {srcPath}")
+      print()
+      print_info()
+      sys.exit(1)
+
+   failed = update_files(srcFile, srcPath)
+   sys.exit(1 if failed else 0)

@@ -18,7 +18,7 @@ Download the latest release from the [Releases page](https://github.com/RemusRig
 Copy `RRFMCLI.exe` (or `RRFMCLI.py`) to a folder, for example `D:\My Apps\RRFMCLI\`.
 To run it from any folder, add that folder to your `PATH`.
 
-To build the `.exe` yourself: install Python and PyInstaller (`pip install pyinstaller`), then run `Build.bat`.
+To build the `.exe` yourself: install Python and PyInstaller (`py -m pip install pyinstaller`), then run `Build.bat`. It uses the `py` launcher, so any installed Python 3 version works.
 
 
 
@@ -37,7 +37,7 @@ Run without parameters to show the help.
 |`/source:<sourcefile>`|The source file, with its path|
 |`/search:<searchpath>`|The folder to search (subfolders included)|
 
-The switches must be given in this order. Wrap paths with spaces in quotes. The source file itself is skipped.
+The switches can be given in any order. Wrap paths with spaces in quotes. The source file itself is skipped. Files that cannot be overwritten (read-only, locked, access denied) are listed as `Failed` and the rest are still updated.
 
 Example: update every `config.ini` under `D:\Sites` with `D:\Templates\config.ini`:
 
