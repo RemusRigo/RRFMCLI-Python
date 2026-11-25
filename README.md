@@ -30,7 +30,7 @@ See the [User's Guide](Users%20Guide.md) for requirements and usage.
 ![Python](https://img.shields.io/badge/Language-Python-blue)
 ![VS](https://img.shields.io/badge/IDE-Visual%20Studio-purple)
 <br>
-![status](https://img.shields.io/badge/status-in%20progress-orange) 
+![status](https://img.shields.io/badge/status-completed-brightgreen)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/RemusRigo/RRFMCLI-Python/total)
 
 

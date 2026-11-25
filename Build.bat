@@ -6,4 +6,5 @@ rem --icon=myicon.ico
 cd /d "%~dp0RRFMCLI"
 py -m PyInstaller --onefile --console --name RRFMCLI RRFMCLI.py
 
-@pause
+copy *.md .\RRFMCLI\dist /Y
+copy *.txt .\RRFMCLI\dist /Y
