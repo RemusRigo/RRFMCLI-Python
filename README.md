@@ -37,5 +37,7 @@ See the [User's Guide](Users%20Guide.md) for requirements and usage.
 
 ## Roadmap
 
+* 2026-11-25: Fix: Order of switches doesn't matter now
+* 2026-11-25: Fix: No crush if no arguments are given
 * 2026-07-26: Add: /UF Update file
 * 2026-07-26: Project started
